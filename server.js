@@ -8,7 +8,7 @@ var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public'));
 
-/* io.on allows us to listen for events */
+/* io.on allows us to listen for event. This particular event checks forw hen a user has been connected. */
 io.on("connection", function() {
 	console.log("User connected via socket.io");
 });
