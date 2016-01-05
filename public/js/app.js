@@ -6,8 +6,9 @@ socket.on("connect", function() {
 
 /* This custom event "message" is what we specified in server.js */
 socket.on("message", function (message) {
+	var momentTimestamp = moment.utc(message.timestamp);
 	console.log(message.text);
-	jQuery(".messages").append('<p>' + message.text + '</p>'); /* "." for classes when using jQuery. Append adds to a tag. */
+	jQuery(".messages").append('<p><strong>' + momentTimestamp.local().format('h:mm a') + ': </strong>' + message.text + '</p>'); /* "." for classes when using jQuery. Append adds to a tag. */
 });
 
 /* Handles submitting new messages */
