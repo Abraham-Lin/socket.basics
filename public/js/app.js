@@ -6,19 +6,27 @@ console.log(name);
 console.log(room);
 
 
+jQuery('.room-title').text(room);
+
 socket.on("connect", function() {
 	console.log("Connected to socket.io server.");
+	socket.emit("joinRoom", {
+		name: name,
+		room: room
+	});
 });
 
 /* This custom event "message" is what we specified in server.js */
 socket.on("message", function (message) {
 	var momentTimestamp = moment.utc(message.timestamp).local().format("h:mm a");
-	var $message = jQuery('.messages'); /* "." for classes when using jQuery. Append adds to a tag. */
+	var $messages = jQuery('.messages'); /* "." for classes when using jQuery. Append adds to a tag. */
+	var $message =jQuery('<li class="list-group-item"></li>');
 	console.log(message.text);
 
 
 	$message.append('<p><strong>' + message.name + '  ' + momentTimestamp + ': </strong></p>');
 	$message.append('<p>' + message.text + '</p>');
+	$messages.append($message);
 });
 
 /* Handles submitting new messages */
